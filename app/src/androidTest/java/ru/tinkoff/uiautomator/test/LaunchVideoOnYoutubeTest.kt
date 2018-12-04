@@ -4,7 +4,14 @@ import android.support.test.runner.AndroidJUnit4
 import org.junit.Test
 import org.junit.runner.RunWith
 import ru.tinkoff.uiautomator.application.YouTube
-import ru.tinkoff.uiautomator.util.getDevice
+import androidx.test.uiautomator.Until
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiObject2
+import ru.tinkoff.uiautomator.util.*
+import java.util.concurrent.TimeUnit
+
+
+const val SEARCH_QUERY = "Reindeer on black paper speed drawing"
 
 @RunWith(AndroidJUnit4::class)
 class LaunchVideoOnYoutubeTest : AbstractApplicationTest<YouTube>(YouTube()) {
@@ -14,16 +21,15 @@ class LaunchVideoOnYoutubeTest : AbstractApplicationTest<YouTube>(YouTube()) {
         getDevice().pressHome()
         app.open()
         app.clickSearch()
-        app.typeToSearch("Reindeer on black paper speed drawing")
+        app.typeToSearch(SEARCH_QUERY)
         getDevice().pressEnter()
         app.clickOnFirstVideo()
 
         if(app.hasAdversting()){
-            Thread.sleep(5000)
             app.skipAdversting()
         }
 
-        Thread.sleep(10000)
+        app.waitTenSeconds()
         app.clickOnPlayer()
         app.clickOnPause()
     }
